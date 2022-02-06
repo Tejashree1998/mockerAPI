@@ -1,11 +1,11 @@
 swagger: "2.0"
 info:
-  description: "CS561 Assignment 4"
+  description: "CS561 Assignment 4 - cs561"
   version: "1.0.0"
-  title: "CS561: Swagger Demo"
+  title: "CS561 - weather swagger doc"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "sureshas@oregonstate.edu"
+    email: "rajkarnt@oregonstate.edu"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -13,18 +13,26 @@ host: "localhost:3000"
 basePath: "/v1"
 tags:
 - name: "Weather Service"
-  description: "Everything about Corvallis's Weather"
+  description: ""
 - name: "Greetings"
   description: "Hello World!"
 - name: "Authentication"
   description: "User authentication"
 schemes:
 - "http"
+securityDefinitions:
+  Bearer:
+    description: ENTER  "Bearer token" AS INPUT 
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /weather:
     get:
       tags:
       - "Weather Service"
+      security:
+        - Bearer: []
       summary: "Get Corvallis's weather details"
       operationId: "getWeatherData"
       produces:
@@ -56,6 +64,8 @@ paths:
     get:
       tags:
       - "hello world"
+      security:
+      - Bearer: []
       summary: "Get greetings"
       operationId: "getGreetings"
       produces:
@@ -65,7 +75,7 @@ paths:
           description: "Success"
           schema:
             type: "object"
-            example: {"response": "hello World!"}
+            example: {"Greeting": "hello World!"}
   /auth:
     post:
       tags:
@@ -92,12 +102,12 @@ paths:
           description: "successful"
           schema:
             $ref: "#/definitions/Token"
-        "400":
-          description: "Invalid input"
+        "410":
+          description: "Username or Password Incorrect"
           schema:
-            $ref: "#/definitions/invalidInput"
-        "500":
-          description: "Internal server error"
+            $ref: "#/definitions/ErrorApiResponse"
+        "405":
+          description: "Invalid input"
           schema:
             $ref: "#/definitions/ErrorApiResponse"
 definitions:
@@ -282,13 +292,4 @@ definitions:
         example: "error"
       message:
         type: string
-        example: "Internal Server"
-  invalidInput:
-    type: object
-    properties:
-      type:
-        type: string
-        example: "error"
-      message:
-        type: string
-        example: "Invalid Input"
+        example: "<Error Message>"
