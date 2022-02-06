@@ -1,0 +1,8 @@
+services:
+  dev:
+    image: "swiftlang/swift:nightly-focal"
+    volumes:
+      - C:\Users\Tejashree Rajkarne\mockerAPI:/code
+    ports:
+      - "3000:3000"
+    command: bash -c "apt-get -y update && apt-get -y install nodejs && node /code/index.js"
